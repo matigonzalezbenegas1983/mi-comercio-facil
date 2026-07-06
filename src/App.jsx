@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { BrowserMultiFormatReader } from "@zxing/browser";
+import { supabase } from "./lib/supabase";
 import {
   Store,
   Package,
@@ -15,6 +16,7 @@ import {
   Search,
 } from "lucide-react";
 import "./index.css";
+
 
 const initialProviders = [
   { id: crypto.randomUUID(), name: "Distribuidora Norte", margin: 35 },
@@ -1036,6 +1038,35 @@ function Configuracion() {
 }
 
 export default function App() {
+    useEffect(() => {
+    async function testSupabase() {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .limit(5);
+
+      if (error) {
+        console.error("Error Supabase:", error);
+      } else {
+        console.log("Supabase conectado:", data);
+      }
+    }
+
+    testSupabase();
+  }, []);
+  useEffect(() => {
+  async function testSupabase() {
+    const { data, error } = await supabase.from("products").select("*").limit(5);
+
+    if (error) {
+      console.error("Error Supabase:", error);
+    } else {
+      console.log("Supabase conectado:", data);
+    }
+  }
+
+  testSupabase();
+}, []);
   const [currentPage, setCurrentPage] = useState("Inicio");
   const [products, setProducts] = useLocalState("mcf_products", initialProducts);
   const [providers, setProviders] = useLocalState("mcf_providers", initialProviders);
