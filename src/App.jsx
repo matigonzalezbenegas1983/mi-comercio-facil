@@ -307,18 +307,18 @@ function Productos({ products, setProducts }) {
       return;
     }
 
-    setProducts([
-      {
-        id: crypto.randomUUID(),
-        barcode: form.barcode.trim(),
-        name: form.name,
-        stock: Number(form.stock || 0),
-        cost: Number(form.cost || 0),
-        price: Number(form.price || 0),
-        provider: form.provider || "Sin proveedor",
-      },
-      ...products,
-    ]);
+    const newProduct = {
+      barcode: form.barcode ? form.barcode.trim() : '',
+      name: form.name,
+      stock: Number(form.stock || 0),
+      cost: Number(form.cost || 0),
+      price: Number(form.price || 0),
+      provider_name: form.provider || "Sin proveedor",
+    };
+    supabase.from("products").insert([newProduct]).select().single().then(({ data, error }) => {
+      if (!error && data) setProducts(prev => [{...data, provider: data.provider_name}, ...prev]);
+      else alert("Error al guardar: " + (error?.message || "desconocido"));
+    });
 
     setForm({
       barcode: "",
@@ -331,7 +331,10 @@ function Productos({ products, setProducts }) {
   }
 
   function deleteProduct(id) {
-    setProducts(products.filter((product) => product.id !== id));
+    supabase.from("products").delete().eq("id", id).then(({ error }) => {
+    if (!error) setProducts(products.filter((product) => product.id !== id));
+    else alert("Error al eliminar: " + (error?.message || ""));
+  });
   }
 
   const findStockProduct = useCallback(
@@ -1038,35 +1041,6 @@ function Configuracion() {
 }
 
 export default function App() {
-    useEffect(() => {
-    async function testSupabase() {
-      const { data, error } = await supabase
-        .from("products")
-        .select("*")
-        .limit(5);
-
-      if (error) {
-        console.error("Error Supabase:", error);
-      } else {
-        console.log("Supabase conectado:", data);
-      }
-    }
-
-    testSupabase();
-  }, []);
-  useEffect(() => {
-  async function testSupabase() {
-    const { data, error } = await supabase.from("products").select("*").limit(5);
-
-    if (error) {
-      console.error("Error Supabase:", error);
-    } else {
-      console.log("Supabase conectado:", data);
-    }
-  }
-
-  testSupabase();
-}, []);
   const [currentPage, setCurrentPage] = useState("Inicio");
   const [products, setProducts] = useLocalState("mcf_products", initialProducts);
   const [providers, setProviders] = useLocalState("mcf_providers", initialProviders);
