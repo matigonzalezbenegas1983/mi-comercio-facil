@@ -395,21 +395,11 @@ function Productos({ products, setProducts }) {
     }
 
     const newStock = Number(foundProduct.stock || 0) + Number(stockQuantity);
-
-    setProducts(
-      products.map((product) =>
-        product.id === foundProduct.id
-          ? {
-              ...product,
-              stock: newStock,
-            }
-          : product
-      )
-    );
-
-    setFoundProduct({
-      ...foundProduct,
-      stock: newStock,
+    supabase.from("products").update({ stock: newStock }).eq("id", foundProduct.id).then(({ error }) => {
+      if (!error) {
+        setProducts(products.map((p) => p.id === foundProduct.id ? { ...p, stock: newStock } : p));
+        setFoundProduct({ ...foundProduct, stock: newStock });
+      }
     });
 
     setStockMessage(
