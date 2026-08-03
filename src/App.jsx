@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { BrowserMultiFormatReader } from "@zxing/browser";
 import { supabase } from "./lib/supabase";
@@ -116,7 +116,7 @@ function ScannerModal({ onDetected, onClose }) {
 
         controlsRef.current = controls;
       } catch {
-        setError("No se pudo abrir la cÃ¡mara. RevisÃ¡ los permisos del navegador.");
+        setError("No se pudo abrir la cámara. Revisá los permisos del navegador.");
       }
     }
 
@@ -132,7 +132,7 @@ function ScannerModal({ onDetected, onClose }) {
     <div className="scanner-modal">
       <div className="scanner-box">
         <div className="panel-header">
-          <h3>Escanear cÃ³digo</h3>
+          <h3>Escanear código</h3>
           <button onClick={onClose}>Cerrar</button>
         </div>
 
@@ -141,7 +141,7 @@ function ScannerModal({ onDetected, onClose }) {
         {error && <p className="error-message">{error}</p>}
 
         <p className="helper-text">
-          ApuntÃ¡ la cÃ¡mara al cÃ³digo de barras. Cuando lo detecte, lo buscarÃ¡ automÃ¡ticamente.
+          Apuntá la cámara al código de barras. Cuando lo detecte, lo buscará automáticamente.
         </p>
       </div>
     </div>
@@ -158,8 +158,8 @@ function Inicio({ setCurrentPage, products, sales }) {
       <section className="home-hero">
         <div>
           <span className="status-pill">Negocio simple y ordenado</span>
-          <h2>Hola, MatÃ­as</h2>
-          <p>VendÃ©, revisÃ¡ stock e importÃ¡ listas sin planillas ni vueltas.</p>
+          <h2>Hola, Matías</h2>
+          <p>Vendé, revisá stock e importá listas sin planillas ni vueltas.</p>
 
           <div className="hero-actions">
             <button className="big-action primary" onClick={() => setCurrentPage("Ventas")}>
@@ -177,7 +177,7 @@ function Inicio({ setCurrentPage, products, sales }) {
         <div className="today-card">
           <p>Ganancia estimada</p>
           <strong>{money(profit)}</strong>
-          <span>Calculada segÃºn costo y venta</span>
+          <span>Calculada según costo y venta</span>
         </div>
       </section>
 
@@ -210,18 +210,18 @@ function Inicio({ setCurrentPage, products, sales }) {
       <section className="home-grid-soft">
         <div className="soft-panel">
           <div className="soft-header">
-            <h3>QuÃ© hacer hoy</h3>
+            <h3>Qué hacer hoy</h3>
           </div>
 
           <div className="todo-cards">
             <button onClick={() => setCurrentPage("Productos")}>
               <strong>Reponer stock</strong>
-              <span>{lowStock.length} productos necesitan atenciÃ³n</span>
+              <span>{lowStock.length} productos necesitan atención</span>
             </button>
 
             <button onClick={() => setCurrentPage("Importar")}>
               <strong>Actualizar precios</strong>
-              <span>ImportÃ¡ la lista del proveedor</span>
+              <span>Importá la lista del proveedor</span>
             </button>
 
             <button onClick={() => setCurrentPage("Caja")}>
@@ -233,7 +233,7 @@ function Inicio({ setCurrentPage, products, sales }) {
 
         <div className="soft-panel">
           <div className="soft-header">
-            <h3>Accesos rÃ¡pidos</h3>
+            <h3>Accesos rápidos</h3>
           </div>
 
           <div className="shortcut-grid">
@@ -292,7 +292,7 @@ function Productos({ products, setProducts }) {
     event.preventDefault();
 
     if (!form.name || !form.price) {
-      alert("CompletÃ¡ nombre y precio de venta.");
+      alert("Completá nombre y precio de venta.");
       return;
     }
 
@@ -303,7 +303,7 @@ function Productos({ products, setProducts }) {
     );
 
     if (exists) {
-      alert("Ya existe un producto con ese cÃ³digo de barras.");
+      alert("Ya existe un producto con ese código de barras.");
       return;
     }
 
@@ -342,7 +342,7 @@ function Productos({ products, setProducts }) {
       const cleanCode = String(code || "").trim();
 
       if (!cleanCode) {
-        alert("IngresÃ¡ o escaneÃ¡ un cÃ³digo.");
+        alert("Ingresá o escaneá un código.");
         return;
       }
 
@@ -362,7 +362,7 @@ function Productos({ products, setProducts }) {
       setStockMessage("");
 
       const createNow = confirm(
-        `El cÃ³digo ${cleanCode} no estÃ¡ cargado. Â¿QuerÃ©s crear el producto con este cÃ³digo?`
+        `El código ${cleanCode} no está cargado. ¿Querés crear el producto con este código?`
       );
 
       if (createNow) {
@@ -385,7 +385,7 @@ function Productos({ products, setProducts }) {
 
   function addStock() {
     if (!foundProduct) {
-      alert("Primero buscÃ¡ o escaneÃ¡ un producto.");
+      alert("Primero buscá o escaneá un producto.");
       return;
     }
 
@@ -413,7 +413,7 @@ function Productos({ products, setProducts }) {
     });
 
     setStockMessage(
-      `Stock actualizado: ${foundProduct.name} sumÃ³ ${stockQuantity} unidades.`
+      `Stock actualizado: ${foundProduct.name} sumó ${stockQuantity} unidades.`
     );
 
     setStockQuantity(1);
@@ -441,7 +441,7 @@ function Productos({ products, setProducts }) {
                 <div>
                   <h4>{product.name}</h4>
                   <p>{product.provider}</p>
-                  <p>CÃ³digo: {product.barcode || "Sin cÃ³digo"}</p>
+                  <p>Código: {product.barcode || "Sin código"}</p>
                   <p>Costo: {money(product.cost)}</p>
                 </div>
 
@@ -468,13 +468,13 @@ function Productos({ products, setProducts }) {
             <h3>Cargar stock con lector</h3>
 
             <p className="helper-text">
-              EscaneÃ¡ el cÃ³digo, indicÃ¡ la cantidad y sumalo al stock.
+              Escaneá el código, indicá la cantidad y sumalo al stock.
             </p>
 
             <div className="barcode-box">
               <div className="barcode-search">
                 <input
-                  placeholder="EscaneÃ¡ o escribÃ­ el cÃ³digo"
+                  placeholder="Escaneá o escribí el código"
                   value={stockCode}
                   onChange={(e) => setStockCode(e.target.value)}
                   onKeyDown={(e) => {
@@ -499,7 +499,7 @@ function Productos({ products, setProducts }) {
                 onClick={() => setStockScannerOpen(true)}
               >
                 <Camera size={18} />
-                Escanear con cÃ¡mara
+                Escanear con cámara
               </button>
             </div>
 
@@ -535,7 +535,7 @@ function Productos({ products, setProducts }) {
             <h3>Nuevo producto</h3>
 
             <input
-              placeholder="CÃ³digo de barras"
+              placeholder="Código de barras"
               value={form.barcode}
               onChange={(e) => setForm({ ...form, barcode: e.target.value })}
             />
@@ -591,27 +591,24 @@ function Proveedores({ providers, setProviders }) {
     event.preventDefault();
 
     if (!form.name) {
-      alert("IngresÃ¡ el nombre del proveedor.");
+      alert("Ingresá el nombre del proveedor.");
       return;
     }
 
-    const newProvider = {
-      name: form.name.trim(),
-      margin: Number(form.margin || 0),
-    };
-    supabase.from("providers").insert([newProvider]).select().single().then(({ data, error }) => {
-      if (!error && data) setProviders(prev => [...prev, data]);
-      else alert("Error al guardar proveedor: " + (error?.message || "desconocido"));
-    });
+    setProviders([
+      {
+        id: crypto.randomUUID(),
+        name: form.name,
+        margin: Number(form.margin || 30),
+      },
+      ...providers,
+    ]);
 
     setForm({ name: "", margin: "" });
   }
 
   function deleteProvider(id) {
-    supabase.from("providers").delete().eq("id", id).then(({ error }) => {
-      if (!error) setProviders(prev => prev.filter((provider) => provider.id !== id));
-      else alert("Error al eliminar proveedor: " + (error?.message || "desconocido"));
-    });
+    setProviders(providers.filter((provider) => provider.id !== id));
   }
 
   return (
@@ -676,8 +673,8 @@ function Importar({ providers, products, setProducts }) {
     const barcode =
       row.codigo ||
       row.Codigo ||
-      row["cÃ³digo"] ||
-      row["CÃ³digo"] ||
+      row["código"] ||
+      row["Código"] ||
       row.barcode ||
       row.Barcode ||
       row.ean ||
@@ -727,7 +724,7 @@ function Importar({ providers, products, setProducts }) {
 
   function confirmImport() {
     if (preview.length === 0) {
-      alert("Primero cargÃ¡ un archivo.");
+      alert("Primero cargá un archivo.");
       return;
     }
 
@@ -771,13 +768,13 @@ function Importar({ providers, products, setProducts }) {
       <div className="panel form-panel">
         <h3>Importar lista</h3>
         <p className="helper-text">
-          SubÃ­ un Excel o CSV con columnas: codigo, nombre, stock, costo.
+          Subí un Excel o CSV con columnas: codigo, nombre, stock, costo.
         </p>
 
         <select value={selectedProvider} onChange={(e) => setSelectedProvider(e.target.value)}>
           {providers.map((provider) => (
             <option key={provider.id} value={provider.name}>
-              {provider.name} â€” margen {provider.margin}%
+              {provider.name} — margen {provider.margin}%
             </option>
           ))}
         </select>
@@ -807,7 +804,7 @@ function Importar({ providers, products, setProducts }) {
             <div className="product-item" key={item.id}>
               <div>
                 <h4>{item.name}</h4>
-                <p>CÃ³digo: {item.barcode || "Sin cÃ³digo"}</p>
+                <p>Código: {item.barcode || "Sin código"}</p>
                 <p>{item.provider}</p>
                 <p>Costo: {money(item.cost)}</p>
               </div>
@@ -820,7 +817,7 @@ function Importar({ providers, products, setProducts }) {
           ))}
 
           {preview.length === 0 && (
-            <p className="helper-text">TodavÃ­a no cargaste ningÃºn archivo.</p>
+            <p className="helper-text">Todavía no cargaste ningún archivo.</p>
           )}
         </div>
       </div>
@@ -852,7 +849,7 @@ function Ventas({ products, setProducts, sales, setSales, setCurrentPage }) {
       }
 
       const shouldCreate = confirm(
-        `El cÃ³digo ${cleanCode} no estÃ¡ cargado. Â¿QuerÃ©s crear este producto ahora?`
+        `El código ${cleanCode} no está cargado. ¿Querés crear este producto ahora?`
       );
 
       if (shouldCreate) {
@@ -880,7 +877,7 @@ function Ventas({ products, setProducts, sales, setSales, setCurrentPage }) {
     event.preventDefault();
 
     if (!selectedProduct) {
-      alert("ElegÃ­ un producto.");
+      alert("Elegí un producto.");
       return;
     }
 
@@ -893,18 +890,18 @@ function Ventas({ products, setProducts, sales, setSales, setCurrentPage }) {
     const cost = selectedProduct.cost * quantity;
     const profit = total - cost;
 
-    const newSale = {
-      product_name: selectedProduct.name,
-      quantity,
-      total,
-      cost,
-      profit,
-      
-    };
-    supabase.from("sales").insert([newSale]).select().single().then(({ data, error }) => {
-      if (!error && data) setSales(prev => [data, ...prev]);
-      else alert("Error al guardar venta: " + (error?.message || "desconocido"));
-    });
+    setSales([
+      {
+        id: crypto.randomUUID(),
+        productName: selectedProduct.name,
+        quantity,
+        total,
+        cost,
+        profit,
+        date: new Date().toISOString(),
+      },
+      ...sales,
+    ]);
 
     setProducts(
       products.map((product) =>
@@ -931,7 +928,7 @@ function Ventas({ products, setProducts, sales, setSales, setCurrentPage }) {
           <div className="barcode-box">
             <form className="barcode-search" onSubmit={searchBarcode}>
               <input
-                placeholder="EscaneÃ¡ o escribÃ­ el cÃ³digo"
+                placeholder="Escaneá o escribí el código"
                 value={barcodeSearch}
                 onChange={(e) => setBarcodeSearch(e.target.value)}
               />
@@ -947,14 +944,14 @@ function Ventas({ products, setProducts, sales, setSales, setCurrentPage }) {
               onClick={() => setScannerOpen(true)}
             >
               <Camera size={18} />
-              Escanear con cÃ¡mara
+              Escanear con cámara
             </button>
           </div>
 
           <select value={productId} onChange={(e) => setProductId(e.target.value)}>
             {products.map((product) => (
               <option value={product.id} key={product.id}>
-                {product.name} â€” stock {product.stock} â€” {money(product.price)}
+                {product.name} — stock {product.stock} — {money(product.price)}
               </option>
             ))}
           </select>
@@ -974,7 +971,7 @@ function Ventas({ products, setProducts, sales, setSales, setCurrentPage }) {
 
         <div className="panel">
           <div className="panel-header">
-            <h3>Ãšltimas ventas</h3>
+            <h3>Últimas ventas</h3>
             <span>{sales.length} ventas</span>
           </div>
 
@@ -993,7 +990,7 @@ function Ventas({ products, setProducts, sales, setSales, setCurrentPage }) {
               </div>
             ))}
 
-            {sales.length === 0 && <p className="helper-text">TodavÃ­a no hay ventas.</p>}
+            {sales.length === 0 && <p className="helper-text">Todavía no hay ventas.</p>}
           </div>
         </div>
       </section>
@@ -1009,8 +1006,8 @@ function Caja({ sales }) {
   return (
     <section className="summary-grid">
       <Card title="Caja actual" value={money(total)} note="Ventas registradas" type="green" />
-      <Card title="Costo vendido" value={money(cost)} note="MercaderÃ­a vendida" type="red" />
-      <Card title="Ganancia" value={money(profit)} note="EstimaciÃ³n automÃ¡tica" type="yellow" />
+      <Card title="Costo vendido" value={money(cost)} note="Mercadería vendida" type="red" />
+      <Card title="Ganancia" value={money(profit)} note="Estimación automática" type="yellow" />
       <Card title="Ventas" value={sales.length} note="Operaciones" type="blue" />
     </section>
   );
@@ -1020,23 +1017,23 @@ function Configuracion() {
   return (
     <section className="panel">
       <div className="panel-header">
-        <h3>ConfiguraciÃ³n</h3>
+        <h3>Configuración</h3>
       </div>
 
       <div className="task-list">
         <div className="task-item">
           <span>1</span>
-          <p>Nombre: Mi Comercio FÃ¡cil</p>
+          <p>Nombre: Mi Comercio Fácil</p>
         </div>
 
         <div className="task-item">
           <span>2</span>
-          <p>TipografÃ­a: Poppins</p>
+          <p>Tipografía: Poppins</p>
         </div>
 
         <div className="task-item">
           <span>3</span>
-          <p>DiseÃ±o simple, grÃ¡fico y responsive</p>
+          <p>Diseño simple, gráfico y responsive</p>
         </div>
       </div>
     </section>
@@ -1046,7 +1043,7 @@ function Configuracion() {
 export default function App() {
   const [currentPage, setCurrentPage] = useState("Inicio");
   const [products, setProducts] = useLocalState("mcf_products", initialProducts);
-  const [providers, setProviders] = useState([]);
+  const [providers, setProviders] = useLocalState("mcf_providers", initialProviders);
   const [sales, setSales] = useLocalState("mcf_sales", []);
 
   const menuItems = [
@@ -1056,7 +1053,7 @@ export default function App() {
     { name: "Importar", icon: Upload },
     { name: "Ventas", icon: ShoppingCart },
     { name: "Caja", icon: Wallet },
-    { name: "ConfiguraciÃ³n", icon: Settings },
+    { name: "Configuración", icon: Settings },
   ];
 
   function renderPage() {
@@ -1106,7 +1103,7 @@ export default function App() {
           </div>
 
           <div>
-            <h1>Mi Comercio FÃ¡cil</h1>
+            <h1>Mi Comercio Fácil</h1>
             <p>Control simple para comercios</p>
           </div>
         </div>
